@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TankScript : MonoBehaviour {
+public class TankScript : MonoBehaviour, IDamage
+{
 
     [SerializeField]
     private int tankHealth = 20;
@@ -19,15 +20,32 @@ public class TankScript : MonoBehaviour {
     [SerializeField]
     private GameObject turretKeeper;
 
+    [SerializeField]
+    private GameObject healthKeeper;
+
+    private int maxHealth;
+
 	// Use this for initialization
-	void Start () {
-		
+	void Awake ()
+	{
+	    maxHealth = tankHealth;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		
 	}
+
+    public void Hit(int _hitValue)
+    {
+        Vector3 startScale = healthKeeper.GetComponent<SpriteRenderer>().transform.localScale;
+        SetTankHealth(maxHealth - _hitValue);
+
+        float percentToHealth = (100 / maxHealth) * _hitValue;
+        float healthBarHit = (startScale.x / 100) * percentToHealth;
+
+        healthKeeper.GetComponent<SpriteRenderer>().transform.localScale = startScale - new Vector3(healthBarHit, 0, 0);
+    }
 
     public void Shoot()
     {

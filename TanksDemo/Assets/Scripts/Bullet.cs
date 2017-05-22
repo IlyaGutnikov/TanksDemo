@@ -32,6 +32,14 @@ public class Bullet : MonoBehaviour
         GetComponent<Rigidbody2D>().velocity = transform.up * bulletSpeed;
     }
 
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.tag.Equals("Enemy"))
+        {
+           //TODO collide
+        }
+    }
+
     IEnumerator destroyBullet()
     {
         yield return new WaitForSeconds(5);
