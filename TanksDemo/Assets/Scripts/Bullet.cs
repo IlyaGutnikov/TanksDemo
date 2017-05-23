@@ -36,7 +36,10 @@ public class Bullet : MonoBehaviour
     {
         if (col.tag.Equals("Enemy"))
         {
-           //TODO collide
+            IDamage d = (IDamage)col.gameObject.GetComponent(typeof(IDamage));
+            d.TakeDamage(bulletPower);
+
+            Destroy(this.gameObject);
         }
     }
 

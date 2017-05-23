@@ -44,11 +44,11 @@ public class PlayerControlls : MonoBehaviour
     void FixedUpdate()
     {
         //Move
-        Vector2 move = (Vector2) transform.up * gas * Time.deltaTime * tankScript.GetTankSpeed();
+        Vector2 move = (Vector2) transform.up * gas * Time.deltaTime * tankScript.GetSpeed();
         tankRigidbody.MovePosition(tankRigidbody.position + move);
 
         //Rotate
-        tankRigidbody.MoveRotation(tankRigidbody.rotation - rotate * tankScript.GetTankSpeed() * 10 * Time.fixedDeltaTime);
+        tankRigidbody.MoveRotation(tankRigidbody.rotation - rotate * tankScript.GetSpeed() * 10 * Time.fixedDeltaTime);
     }
 
     private void GetTankMoves()

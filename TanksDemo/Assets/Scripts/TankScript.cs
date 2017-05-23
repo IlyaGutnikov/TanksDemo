@@ -2,18 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TankScript : MonoBehaviour, IDamage
+public class TankScript : CharacterModel, IDamage
 {
-
-    [SerializeField]
-    private int tankHealth = 20;
-
-    [SerializeField]
-    private int tankArmor = 10;
-
-    [SerializeField]
-    private int tankSpeed = 4;
-
     [SerializeField]
     private TankTurret[] turrets;
 
@@ -23,23 +13,21 @@ public class TankScript : MonoBehaviour, IDamage
     [SerializeField]
     private GameObject healthKeeper;
 
-    private int maxHealth;
+    void Awake()
+    {
+        maxHealth = GetHealth();
+    }
 
-	// Use this for initialization
-	void Awake ()
-	{
-	    maxHealth = tankHealth;
-	}
-	
-	// Update is called once per frame
+    // Update is called once per frame
 	void Update () {
 		
 	}
 
-    public void Hit(int _hitValue)
+    public void TakeDamage(int _hitValue)
     {
+        
         Vector3 startScale = healthKeeper.GetComponent<SpriteRenderer>().transform.localScale;
-        SetTankHealth(maxHealth - _hitValue);
+        SetHealth(maxHealth - _hitValue);
 
         float percentToHealth = (100 / maxHealth) * _hitValue;
         float healthBarHit = (startScale.x / 100) * percentToHealth;
@@ -98,30 +86,5 @@ public class TankScript : MonoBehaviour, IDamage
         }
 
         Instantiate(turrets[nextTurret], turretKeeper.transform);
-    }
-
-    public int GetTankHealth()
-    {
-        return tankHealth;
-    }
-
-    public void SetTankHealth(int _tankHealth)
-    {
-        tankHealth = _tankHealth;
-    }
-
-    public int GetTankArmor()
-    {
-        return tankArmor;
-    }
-
-    public void SetTankArmor(int _tankArmor)
-    {
-        tankArmor = _tankArmor;
-    }
-
-    public int GetTankSpeed()
-    {
-        return tankSpeed;
     }
 }
