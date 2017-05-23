@@ -12,6 +12,9 @@ public class PlayerControlls : MonoBehaviour
     private Rigidbody2D tankRigidbody;
     private TankScript tankScript;
 
+    [SerializeField]
+    private int RotateSpeedBooster = 50;
+
     void Awake()
     {
         tankRigidbody = gameObject.GetComponent<Rigidbody2D>();
@@ -48,7 +51,7 @@ public class PlayerControlls : MonoBehaviour
         tankRigidbody.MovePosition(tankRigidbody.position + move);
 
         //Rotate
-        tankRigidbody.MoveRotation(tankRigidbody.rotation - rotate * tankScript.GetSpeed() * 10 * Time.fixedDeltaTime);
+        tankRigidbody.MoveRotation(tankRigidbody.rotation - rotate * tankScript.GetSpeed() * RotateSpeedBooster * Time.fixedDeltaTime);
     }
 
     private void GetTankMoves()
