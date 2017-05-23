@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class GameManager : MonoBehaviour
+public class GameManager : SingletonGameObject<GameManager>
 {
     [SerializeField]
     private Camera camera;
@@ -22,6 +23,8 @@ public class GameManager : MonoBehaviour
 
     private GameObject _player;
 
+    private int killedCount = 0;
+
     void Awake()
     {
         _player = GameObject.FindGameObjectWithTag("Player");
@@ -36,15 +39,6 @@ public class GameManager : MonoBehaviour
         }
 	}
 	
-	// Update is called once per frame
-	void Update () {
-
-	    if (_player.GetComponent<CharacterModel>().GetHealth() <= 0)
-	    {
-            //TODO
-            
-	    }
-	}
 
     void FixedUpdate()
     {
@@ -63,4 +57,19 @@ public class GameManager : MonoBehaviour
         GameObject _enemy = Instantiate(enemies[Random.Range(0, enemies.Length - 1)]);
         _enemy.transform.position = v3Pos;
     }
+
+    public void CountKilledEnemy()
+    {
+        killedCount = killedCount + 1;
+    }
+
+    public void EndGameState()
+    {
+        diedText.enabled = true;
+        scoreText.enabled = true;
+
+        scoreText.text = "You killed " + killedCount + " monsters";
+        Time.timeScale = 0;
+    }
+
 }

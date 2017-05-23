@@ -23,13 +23,21 @@ public class TankScript : CharacterModel, IDamage
 		
 	}
 
-    public void TakeDamage(int _hitValue)
+    public void TakeDamage(float _hitValue)
     {
-        
-        Vector3 startScale = healthKeeper.GetComponent<SpriteRenderer>().transform.localScale;
-        SetHealth(maxHealth - _hitValue);
 
-        float percentToHealth = (100 / maxHealth) * _hitValue;
+        float _hit = _hitValue * GetArmor();
+
+        SetHealth(GetHealth() - _hit);
+
+        if (GetHealth() <= 0)
+        {
+           GameManager.Instance.EndGameState();
+        }
+
+        Vector3 startScale = healthKeeper.GetComponent<SpriteRenderer>().transform.localScale;
+
+        float percentToHealth = (100 / maxHealth) * _hit;
         float healthBarHit = (startScale.x / 100) * percentToHealth;
 
         healthKeeper.GetComponent<SpriteRenderer>().transform.localScale = startScale - new Vector3(healthBarHit, 0, 0);

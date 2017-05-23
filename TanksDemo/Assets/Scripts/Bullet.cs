@@ -4,25 +4,25 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    private int bulletPower = 0;
-    private int bulletSpeed = 0;
+    private float bulletPower = 0;
+    private float bulletSpeed = 0;
 
     void Start()
     {
         StartCoroutine(destroyBullet());
     }
 
-    public void SetBulletPower(int _power)
+    public void SetBulletPower(float _power)
     {
         bulletPower = _power;
     }
 
-    public void SetBulletSpeed(int _speed)
+    public void SetBulletSpeed(float _speed)
     {
         bulletSpeed = _speed;
     }
 
-    public int GetBulletPower()
+    public float GetBulletPower()
     {
         return bulletPower;
     }

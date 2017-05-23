@@ -7,7 +7,7 @@ public class EnemyScript : CharacterModel, IDamage
     private Transform playerTransform;
 
     [SerializeField]
-    private int HitValue = 10;
+    private int HitValueToPlayer = 10;
 
     [SerializeField]
     private GameObject healthKeeper;
@@ -19,20 +19,24 @@ public class EnemyScript : CharacterModel, IDamage
         maxHealth = GetHealth();
     }
 
-    public void TakeDamage(int _hitValue)
+    public void TakeDamage(float _hitValue)
     {
-        Vector3 startScale = healthKeeper.GetComponent<SpriteRenderer>().transform.localScale;
-        SetHealth(maxHealth - _hitValue);
+        float _hit = _hitValue * GetArmor();
 
-        float percentToHealth = (100 / maxHealth) * _hitValue;
-        float healthBarHit = (startScale.x / 100) * percentToHealth;
-
-        healthKeeper.GetComponent<SpriteRenderer>().transform.localScale = startScale - new Vector3(healthBarHit, 0, 0);
+        this.SetHealth(GetHealth() - _hit);
 
         if (GetHealth() <= 0)
         {
             Destroy(this.gameObject);
         }
+
+        Vector3 startScale = healthKeeper.GetComponent<SpriteRenderer>().transform.localScale;
+
+        float percentToHealth = (100 / maxHealth) * _hit;
+        float healthBarHit = (startScale.x / 100) * percentToHealth;
+
+        healthKeeper.GetComponent<SpriteRenderer>().transform.localScale = startScale - new Vector3(healthBarHit, 0, 0);
+
     }
 
     // Update is called once per frame
@@ -49,9 +53,14 @@ public class EnemyScript : CharacterModel, IDamage
         if (col.tag.Equals("Player"))
         {
             IDamage d = (IDamage) col.gameObject.GetComponent(typeof(IDamage));
-            d.TakeDamage(HitValue);
+            d.TakeDamage(HitValueToPlayer);
 
             Destroy(gameObject);
         }
+    }
+
+    void OnDestroy()
+    {
+        GameManager.Instance.CountKilledEnemy();
     }
 }

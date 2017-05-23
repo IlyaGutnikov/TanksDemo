@@ -5,15 +5,16 @@ using UnityEngine;
 public abstract class CharacterModel : MonoBehaviour {
 
     [SerializeField]
-    private int health = 20;
+    private float health;
+
+    [Range(0.0f, 1.0f)]
+    [SerializeField]
+    private float armor;
 
     [SerializeField]
-    private int armor = 10;
+    private float speed;
 
-    [SerializeField]
-    private int speed = 4;
-
-    protected int maxHealth;
+    protected float maxHealth;
 
     void Awake() {
 
@@ -21,27 +22,27 @@ public abstract class CharacterModel : MonoBehaviour {
 
     }
 
-    public int GetHealth()
+    public float GetHealth()
     {
         return health;
     }
 
-    public void SetHealth(int _health)
+    public void SetHealth(float _health)
     {
         health = _health;
     }
 
-    public int GetArmor()
+    public float GetArmor()
     {
         return armor;
     }
 
-    public void SetArmor(int _armor)
+    public void SetArmor(float _armor)
     {
         armor = _armor;
     }
 
-    public int GetSpeed()
+    public float GetSpeed()
     {
         return speed;
     }

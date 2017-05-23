@@ -15,10 +15,10 @@ public class TankTurret : MonoBehaviour
     private GameObject ammo;
 
     [SerializeField]
-    private int bulletPower;
+    private float bulletPower;
 
     [SerializeField]
-    private int bulletSpeed;
+    private float bulletSpeed;
 
     public void Shoot()
     {
